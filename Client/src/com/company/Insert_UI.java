@@ -2,6 +2,12 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class Insert_UI extends JFrame {
 
@@ -41,6 +47,23 @@ public class Insert_UI extends JFrame {
 
         JButton submit = new JButton("Εισαγωγή");
         add(submit);
+
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Song look_op = (Song) Naming.lookup("//localhost/RMIServer");
+                    look_op.Insert(title.getText(),type.getText(),singer.getText(),duration.getText(),stars.getText());
+                } catch (NotBoundException ex) {
+                    ex.printStackTrace();
+                } catch (MalformedURLException ex) {
+                    ex.printStackTrace();
+                } catch (RemoteException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
 
     }
 
