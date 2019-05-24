@@ -14,5 +14,6 @@ public class RMIHandler extends UnicastRemoteObject implements Song {
     @Override
     public void Insert(String title, String type, String singer, String duration, String stars) {
         _Song_toAdd song = new _Song_toAdd(title,type,singer,duration,stars);
+        Controller controller = new Controller();
     }
 }
