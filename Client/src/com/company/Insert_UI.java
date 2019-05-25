@@ -13,13 +13,16 @@ public class Insert_UI extends JFrame {
 
     JTextField title = new JTextField();
     JTextField type = new JTextField();
-    JTextField singer   = new JTextField();
-    JTextField duration   = new JTextField();
-    JTextField stars   = new JTextField();
+    JTextField singer = new JTextField();
+    JTextField duration = new JTextField();
+    JTextField stars = new JTextField();
+    boolean check = false;
+    Song look_op;
 
 
+    public Insert_UI() throws RemoteException, NotBoundException, MalformedURLException {
 
-    public Insert_UI() {
+
         super("Νέo Τραγούδι");
         setSize(600, 300);
         setResizable(false);
@@ -47,24 +50,32 @@ public class Insert_UI extends JFrame {
 
         JButton submit = new JButton("Εισαγωγή");
         add(submit);
+        look_op = (Song) Naming.lookup("//localhost/RMIServer");
 
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Song look_op = (Song) Naming.lookup("//localhost/RMIServer");
-                    look_op.Insert(title.getText(),type.getText(),singer.getText(),duration.getText(),stars.getText());
-                } catch (NotBoundException ex) {
-                    ex.printStackTrace();
-                } catch (MalformedURLException ex) {
-                    ex.printStackTrace();
-                } catch (RemoteException ex) {
-                    ex.printStackTrace();
-                }
-
+                DBInsert();
             }
         });
 
+    }
+
+    public void DBInsert() {
+        try {
+            check = look_op.Insert(new _Song_toAdd(title.getText(), type.getText(), singer.getText(), duration.getText(), Integer.parseInt(stars.getText())));
+            if (!check)
+            {
+                JOptionPane.showMessageDialog(null, "Το τραγούδι υπάρχει ήδη");
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "Το τραγουδι προστέθηκε με επιτυχία");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Υπήρξε πρόβλημα με την σύνδεση στη βάση");
+
+        }
     }
 
 }

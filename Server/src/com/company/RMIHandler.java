@@ -4,16 +4,19 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class RMIHandler extends UnicastRemoteObject implements Song {
+    Controller controller;
+    boolean check = false;
 
-    public RMIHandler() throws RemoteException
-    {
+    public RMIHandler() throws RemoteException {
         super();
         System.out.println("RMI Booted Successfully");
+        controller = new Controller();
     }
 
+
     @Override
-    public void Insert(String title, String type, String singer, String duration, String stars) {
-        _Song_toAdd song = new _Song_toAdd(title,type,singer,duration,stars);
-        Controller controller = new Controller();
+    public boolean Insert(_Song_toAdd song) throws RemoteException{
+        return controller.Insert_Song(song);
     }
+
 }

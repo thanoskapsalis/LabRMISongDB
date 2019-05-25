@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class Client_UI extends JFrame {
 
 
-    public Client_UI(){
+    public Client_UI() {
         super("Αρχική Σελίδα");
         setSize(600, 200);
         setResizable(false);
@@ -29,10 +32,17 @@ public class Client_UI extends JFrame {
         insert.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Insert_UI insert_ui = new Insert_UI();
+                Insert_UI insert_ui = null;
+                try {
+                    insert_ui = new Insert_UI();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+
                 insert_ui.setVisible(true);
             }
         });
 
     }
+
 }

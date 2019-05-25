@@ -22,13 +22,9 @@ public class Main {
             Naming.rebind("//localhost/RMIServer", handler);
 
 
-
-
-
         } catch (Exception e) {
 
             System.out.println(e);
-
 
 
         }
