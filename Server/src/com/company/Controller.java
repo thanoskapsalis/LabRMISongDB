@@ -25,7 +25,7 @@ public class Controller {
 
     public boolean Insert_Song(_Song_toAdd song) {
         try {
-            if (Search(song, null)) {
+            if (Check(song)) {
                 String message = "INSERT INTO songs (TITLE,TYPE,SINGER,DURATION,STARS) VALUES" +
                         " ('" + song.getTitle() + "','" + song.getType() + "','" + song.getSinger() + "','" + song.getDuration() + "','" + song.getStars() + "')";
                 System.out.println(message);
@@ -39,38 +39,53 @@ public class Controller {
         }
     }
 
-    public boolean Search(_Song_toAdd song, String flag) throws SQLException {
+    public boolean Check(_Song_toAdd song) throws SQLException {
         ResultSet records = null;
-        System.out.println("Search Request");
-        if (flag.equals(null)) {
-            records = stat.executeQuery("SELECT TITLE,SINGER FROM songs WHERE (TITLE='" + song.getTitle() + "' AND SINGER='" + song.getSinger() + "')");
-            System.out.println(records.next());
-            if (records.next())
-                return false;
-            return true;
-        } else {
-            switch (flag) {
-                case "title":
-                    records = stat.executeQuery("SELECT * FROM songs WHERE (TITLE='" + song.getTitle() + "')");
-                    break;
-                case "singer":
-                    records = stat.executeQuery("SELECT * FROM songs WHERE (SINGER='" + song.getSinger() + "')");
-                    break;
-            }
-            while(records.next()) {
-                String title=records.getString("TITLE");
-                String singer=records.getString("SINGER");
-                String duration=records.getString("DURATION");
-                int stars=records.getInt("STARS");
-                returned.add(title+"\t"+singer+"\t"+duration+"\t"+stars);
-                return true;
-
-            }
+        records = stat.executeQuery("SELECT TITLE,SINGER FROM songs WHERE (TITLE='" + song.getTitle() + "' AND SINGER='" + song.getSinger() + "')");
+        System.out.println(records.next());
+        if (records.next())
             return false;
-        }
-
-
+        return true;
     }
 
 
+    public ArrayList Search(String song, String flag) {
+        try {
+            ResultSet records = null;
+            System.out.printf("Search Request");
+            switch (flag) {
+                case "title":
+                    records = stat.executeQuery("SELECT * FROM songs WHERE (TITLE='" + song + "')");
+                    break;
+                case "singer":
+                    records = stat.executeQuery("SELECT * FROM songs WHERE (SINGER='" +song + "')");
+                    break;
+            }
+            return MakeArray(records);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
+
+    }
+
+    private ArrayList MakeArray(ResultSet records) {
+
+        String title = null;
+        try {
+            while (records.next()) {
+                title = records.getString("TITLE");
+                String singer = records.getString("SINGER");
+                String duration = records.getString("DURATION");
+                int stars = records.getInt("STARS");
+                returned.add(title + "\t" + singer + "\t" + duration + "\t" + stars);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returned;
+
+    }
 }
+

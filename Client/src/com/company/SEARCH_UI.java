@@ -31,7 +31,7 @@ public class SEARCH_UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.out.println("naiainai"+toSearch.getText());
-                      result =look_op.Search(new _Song_toAdd("naiania","","","",0),"title");
+                      result =look_op.Search(toSearch.getText(),"title");
                     if(result==null)
                         JOptionPane.showMessageDialog(null,"Δεν υπάρχει τραγούδι");
                     else
