@@ -42,6 +42,14 @@ public class SEARCH_UI extends JFrame {
                 SingerSearch();
             }
         });
+
+        rate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Rate_UI rate_ui=new Rate_UI();
+                rate_ui.setVisible(true);
+            }
+        });
     }
 
     private void TitleSearch() {
