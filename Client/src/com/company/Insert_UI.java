@@ -50,7 +50,7 @@ public class Insert_UI extends JFrame {
 
         JButton submit = new JButton("Εισαγωγή");
         add(submit);
-        look_op = (Song) Naming.lookup("//localhost/RMIServer");
+
 
         submit.addActionListener(new ActionListener() {
             @Override
@@ -63,6 +63,7 @@ public class Insert_UI extends JFrame {
 
     public void DBInsert() {
         try {
+            look_op = (Song) Naming.lookup("//localhost/RMIServer");
             check = look_op.Insert(new _Song_toAdd(title.getText(), type.getText(), singer.getText(), duration.getText(), Integer.parseInt(stars.getText())));
             if (!check)
             {

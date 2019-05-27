@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.print.DocFlavor;
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,16 +53,19 @@ public class Controller {
     public ArrayList Search(String song, String flag) {
         try {
             ResultSet records = null;
-            System.out.printf("Search Request");
+            System.out.println("Search Request");
             switch (flag) {
                 case "title":
+                    System.out.println("title");
                     records = stat.executeQuery("SELECT * FROM songs WHERE (TITLE='" + song + "')");
-                    break;
+
+                    return MakeArray(records);
                 case "singer":
                     records = stat.executeQuery("SELECT * FROM songs WHERE (SINGER='" +song + "')");
-                    break;
+                    return MakeArray(records);
             }
-            return MakeArray(records);
+
+
         }
         catch (Exception e){
             System.out.println(e);
@@ -72,20 +76,29 @@ public class Controller {
 
     private ArrayList MakeArray(ResultSet records) {
 
-        String title = null;
+
         try {
+            returned.clear();
             while (records.next()) {
-                title = records.getString("TITLE");
+                String title = records.getString("TITLE");
+                String type = records.getString("TYPE");
                 String singer = records.getString("SINGER");
                 String duration = records.getString("DURATION");
                 int stars = records.getInt("STARS");
-                returned.add(title + "\t" + singer + "\t" + duration + "\t" + stars);
+                returned.add(title + "\t" +type+"\t"+ singer + "\t" + duration + "\t" + stars);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return returned;
 
+    }
+
+    public void PrintArray()
+    {
+        for (int i=0; i<returned.size(); i++){
+            System.out.println(returned.get(i));
+        }
     }
 }
 

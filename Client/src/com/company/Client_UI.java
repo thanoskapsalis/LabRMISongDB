@@ -46,7 +46,16 @@ public class Client_UI extends JFrame {
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SEARCH_UI search_ui= new SEARCH_UI();
+                SEARCH_UI search_ui= null;
+                try {
+                    search_ui = new SEARCH_UI();
+                } catch (RemoteException ex) {
+                    ex.printStackTrace();
+                } catch (NotBoundException ex) {
+                    ex.printStackTrace();
+                } catch (MalformedURLException ex) {
+                    ex.printStackTrace();
+                }
                 search_ui.setVisible(true);
             }
         });

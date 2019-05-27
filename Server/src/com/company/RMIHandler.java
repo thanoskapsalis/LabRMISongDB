@@ -23,8 +23,9 @@ public class RMIHandler extends UnicastRemoteObject implements Song {
 
     @Override
     public ArrayList Search(String song, String flag) throws RemoteException {
-        System.out.println("Searching Request");
-        return controller.Search(song, flag);
+        if(controller.Search(song,flag).isEmpty())
+            return null;
+        return controller.Search(song,flag);
     }
 
 }
