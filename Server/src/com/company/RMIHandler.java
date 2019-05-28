@@ -28,4 +28,12 @@ public class RMIHandler extends UnicastRemoteObject implements Song {
         return controller.Search(song,flag);
     }
 
+    @Override
+    public boolean Rate(String toRate, int stars) throws RemoteException {
+        if (controller.Rate(toRate,stars)) {
+            return true;
+        }
+        return false;
+    }
+
 }

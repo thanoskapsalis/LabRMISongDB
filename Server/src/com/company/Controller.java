@@ -100,5 +100,19 @@ public class Controller {
             System.out.println(returned.get(i));
         }
     }
+
+    public boolean Rate(String toRate, int stars) {
+        try {
+            ResultSet records=null;
+            String message = "UPDATE STARS SET STARS=(SELECT AVG (STARS)) FROM songs WHERE (TITLE='"+toRate+"')";
+            stat.executeQuery(message);
+            return true;
+
+       }catch (Exception e)
+        {
+            System.out.println(e);
+            return false;
+        }
+    }
 }
 
