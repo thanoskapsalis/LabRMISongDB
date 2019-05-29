@@ -36,4 +36,11 @@ public class RMIHandler extends UnicastRemoteObject implements Song {
         return false;
     }
 
+    @Override
+    public ArrayList Rate_Search(int toSearch) throws RemoteException {
+        if(controller.Rate_Search(toSearch).isEmpty())
+            return null;
+        return  controller.Rate_Search(toSearch);
+    }
+
 }

@@ -9,5 +9,6 @@ public interface Song extends Remote {
     public  boolean Insert(_Song_toAdd song) throws RemoteException;
     public ArrayList Search(String song, String flag) throws RemoteException;
     public boolean Rate(String toRate,int stars) throws RemoteException;
+    public ArrayList Rate_Search(int toSearch) throws RemoteException;
 
 }

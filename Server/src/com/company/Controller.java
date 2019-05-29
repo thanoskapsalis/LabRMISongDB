@@ -57,9 +57,7 @@ public class Controller {
             System.out.println("Search Request");
             switch (flag) {
                 case "title":
-                    System.out.println("title");
                     records = stat.executeQuery("SELECT * FROM songs WHERE (TITLE='" + song + "')");
-
                     return MakeArray(records);
                 case "singer":
                     records = stat.executeQuery("SELECT * FROM songs WHERE (SINGER='" + song + "')");
@@ -125,6 +123,16 @@ public class Controller {
         avgstars = avgstars / returned2.size();
         stat.executeUpdate("UPDATE songs SET STARS='" + avgstars + "'WHERE TITLE='" + toRate + "'");
 
+    }
+
+    public ArrayList Rate_Search(int toSearch) {
+        ResultSet records = null;
+        try {
+            records = stat.executeQuery("SELECT * FROM songs WHERE (STARS>='" + toSearch + "')");
+            return MakeArray(records);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }
 

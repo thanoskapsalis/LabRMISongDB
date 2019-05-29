@@ -16,6 +16,8 @@ public class SEARCH_UI extends JFrame {
     JButton simple = new JButton("Αναζήτηση Τραγουδιού");
     JButton singer = new JButton("Αναζήτηση Τραγουδιών του Καλλιτέχνη");
     JButton rate = new JButton("Αναζήτηση και βαθμολόγηση τραγουδιού");
+    JButton threshold = new JButton("Αναζήτηση Τραγουδιών μεγαλύτερης της συγκεκριμένης βαθμολογίας");
+
     public static ArrayList result;
     Song look_op;
 
@@ -27,60 +29,62 @@ public class SEARCH_UI extends JFrame {
         add(simple);
         add(singer);
         add(rate);
+        add(threshold);
 
 
         simple.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                 TitleSearch();
+                SingerSearch("title");
             }
         });
 
         singer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SingerSearch();
+                SingerSearch("singer");
             }
         });
 
         rate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Rate_UI rate_ui=new Rate_UI();
+                Rate_UI rate_ui = new Rate_UI();
                 rate_ui.setVisible(true);
+            }
+        });
+
+        threshold.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Rate_Searchs();
             }
         });
     }
 
-    private void TitleSearch() {
+    private void Rate_Searchs() {
         try {
             look_op = (Song) Naming.lookup("//localhost/RMIServer");
-            System.out.println("naiainai" + toSearch.getText());
-            result = look_op.Search(toSearch.getText(), "title");
-            PrintResult();
-            JOptionPane.showMessageDialog(null, result.get(0).toString());
-        } catch (Exception e1) {
-            JOptionPane.showMessageDialog(null, "Δεν υπάρχει τέτοιο τραγούδι");
-        }
-
-    }
-
-
-    public void SingerSearch() {
-        try {
-            look_op = (Song) Naming.lookup("//localhost/RMIServer");
-            result = look_op.Search(toSearch.getText(), "singer");
-            PrintResult();
+            result = look_op.Rate_Search(Integer.parseInt(toSearch.getText()));
             Result_Window result_window = new Result_Window(result);
             result_window.setVisible(true);
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(null, "Πρόβλημα με την Βάση");
+            JOptionPane.showMessageDialog(null, "Δεν υπάρχει τέτοιο τραγούδι");
         }
     }
 
-    public void PrintResult() {
-        for (int i = 0; i < result.size(); i++)
-            System.out.println(result.get(i));
+
+    public void SingerSearch(String flag) {
+        try {
+            look_op = (Song) Naming.lookup("//localhost/RMIServer");
+            result = look_op.Search(toSearch.getText(), flag);
+            Result_Window result_window = new Result_Window(result);
+            result_window.setVisible(true);
+        } catch (Exception e1) {
+            JOptionPane.showMessageDialog(null, "Δεν υπάρχει τέτοιο τραγούδι");
+        }
     }
+
+
 
 }
