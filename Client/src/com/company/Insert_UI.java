@@ -44,9 +44,7 @@ public class Insert_UI extends JFrame {
         add(durationl);
         add(duration);
 
-        JLabel starsl = new JLabel("Αστέρια (1-5)");
-        add(starsl);
-        add(stars);
+
 
         JButton submit = new JButton("Εισαγωγή");
         add(submit);
@@ -64,7 +62,7 @@ public class Insert_UI extends JFrame {
     public void DBInsert() {
         try {
             look_op = (Song) Naming.lookup("//localhost/RMIServer");
-            check = look_op.Insert(new _Song_toAdd(title.getText(), type.getText(), singer.getText(), duration.getText(), Integer.parseInt(stars.getText())));
+            check = look_op.Insert(new _Song_toAdd(title.getText(), type.getText(), singer.getText(), duration.getText(),0));
             if (!check)
             {
                 JOptionPane.showMessageDialog(null, "Το τραγούδι υπάρχει ήδη");

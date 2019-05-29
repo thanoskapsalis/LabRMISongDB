@@ -27,30 +27,29 @@ public class Rate_UI extends JFrame {
         add(rate);
 
 
-
         rate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     look_op = (Song) Naming.lookup("//localhost/RMIServer");
-                    if(look_op.Rate(torate.getText(),Integer.parseInt(mark.getText())))
-                    {
-                        JOptionPane.showMessageDialog(null,"Επιτυχής Βαθμολόγηση");
+                    if (Integer.parseInt(mark.getText()) > 10 || Integer.parseInt(mark.getText()) < 0)
+                        throw new NotBoundException();
+                    if (look_op.Rate(torate.getText(), Integer.parseInt(mark.getText()))) {
+                        JOptionPane.showMessageDialog(null, "Επιτυχής Βαθμολόγηση");
                         return;
                     }
-                    JOptionPane.showMessageDialog(null,"Το τραγούδι δεν υπάρχει");
 
                 } catch (NotBoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Ο βαθμός πρέπει να είναι από 1 μέχρι και 10");
                     ex.printStackTrace();
                 } catch (MalformedURLException ex) {
                     ex.printStackTrace();
                 } catch (RemoteException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Πρόβλημα σλυνδεσης με την βάση");
                 }
 
             }
         });
-
 
 
     }

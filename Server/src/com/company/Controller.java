@@ -11,6 +11,7 @@ public class Controller {
     Connection conn;
     Statement stat;
     public static ArrayList<String> returned = new ArrayList<>();
+    public static ArrayList<Integer> returned2 = new ArrayList<>();
 
     public Controller() {
         try {
@@ -61,13 +62,12 @@ public class Controller {
 
                     return MakeArray(records);
                 case "singer":
-                    records = stat.executeQuery("SELECT * FROM songs WHERE (SINGER='" +song + "')");
+                    records = stat.executeQuery("SELECT * FROM songs WHERE (SINGER='" + song + "')");
                     return MakeArray(records);
             }
 
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
@@ -85,7 +85,7 @@ public class Controller {
                 String singer = records.getString("SINGER");
                 String duration = records.getString("DURATION");
                 int stars = records.getInt("STARS");
-                returned.add(title + "\t" +type+"\t"+ singer + "\t" + duration + "\t" + stars);
+                returned.add(title + "\t" + type + "\t" + singer + "\t" + duration + "\t" + stars);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,25 +94,37 @@ public class Controller {
 
     }
 
-    public void PrintArray()
-    {
-        for (int i=0; i<returned.size(); i++){
-            System.out.println(returned.get(i));
-        }
-    }
 
     public boolean Rate(String toRate, int stars) {
         try {
-            ResultSet records=null;
-            String message = "UPDATE STARS SET STARS=(SELECT AVG (STARS)) FROM songs WHERE (TITLE='"+toRate+"')";
-            stat.executeQuery(message);
+            //δεν ελέγχω αμα το τραγουδι που πληκτορλογει ο χρήστης υπάρχει μιας και απλα οταν το αναζητήσει για να δει
+            //την βαθμολογία μετα δεν θα εμφανιστεί ποτέ παρά ένα μύνημα λάθους οτι δεν υπάρχει στο main table
+            String message = "INSERT INTO rate (Title,stars) VALUES" +
+                    " ('" + toRate + "','" + stars + "')";
+            stat.executeUpdate(message);
+            CalculateAverage(toRate);
             return true;
 
-       }catch (Exception e)
-        {
+
+        } catch (Exception e) {
             System.out.println(e);
             return false;
         }
+
+    }
+
+    private void CalculateAverage(String toRate) throws SQLException {
+        ResultSet records = null;
+        System.out.println("Calculating Average");
+        records = stat.executeQuery("SELECT stars FROM rate WHERE (TITLE='" + toRate + "')");
+        while (records.next())
+            returned2.add(records.getInt("stars"));
+        int avgstars = 0;
+        for (int i = 0; i < returned2.size(); i++)
+            avgstars = avgstars + returned2.get(i);
+        avgstars = avgstars / returned2.size();
+        stat.executeUpdate("UPDATE songs SET STARS='" + avgstars + "'WHERE TITLE='" + toRate + "'");
+
     }
 }
 

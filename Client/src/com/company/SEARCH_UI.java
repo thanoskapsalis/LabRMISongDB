@@ -20,9 +20,9 @@ public class SEARCH_UI extends JFrame {
     Song look_op;
 
     public SEARCH_UI() throws RemoteException, NotBoundException, MalformedURLException {
-        setSize(600, 300);
+        setSize(600, 600);
         setResizable(false);
-        setLayout(new GridLayout(4, 1));
+        setLayout(new GridLayout(5, 1));
         add(toSearch);
         add(simple);
         add(singer);
@@ -74,7 +74,7 @@ public class SEARCH_UI extends JFrame {
             Result_Window result_window = new Result_Window(result);
             result_window.setVisible(true);
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(null, "Δεν υπάρχει τέτοιο τραγούδι");
+            JOptionPane.showMessageDialog(null, "Πρόβλημα με την Βάση");
         }
     }
 
