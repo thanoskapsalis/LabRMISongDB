@@ -1,5 +1,7 @@
 package com.company;
 
+//321/2015088 Θάνος Καψάλης
+
 import javax.print.DocFlavor;
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
@@ -13,6 +15,8 @@ public class Controller {
     public static ArrayList<String> returned = new ArrayList<>();
     public static ArrayList<Integer> returned2 = new ArrayList<>();
 
+
+    //Με το που ξεκινάμε τον Controller της βάσης δεδομένων ανοίγουμε την σύνδεση και αρχικοποιούμε όλες τις μεταβλητές που θα χρειαστούμε για να έχουμε πρόσβαση σε αυτήν
     public Controller() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -25,6 +29,7 @@ public class Controller {
     }
 
 
+    //Προσθήκη τραγουδιού Ελέγχουμε με την συνάρτηση check άμα υπάρχει ήδη ή όχι και ύστερα επιστρέφουμε true ή false ανάλογα με το αν έγινε η εισαγωγή επιτυχώς η οχι
     public boolean Insert_Song(_Song_toAdd song) {
         try {
             if (Check(song)) {
@@ -41,6 +46,8 @@ public class Controller {
         }
     }
 
+
+    //Ελέγχουμε αν ένα τραγούδι υπάρχει ήδη στην βάση
     public boolean Check(_Song_toAdd song) throws SQLException {
         ResultSet records = null;
         records = stat.executeQuery("SELECT TITLE,SINGER FROM songs WHERE (TITLE='" + song.getTitle() + "' AND SINGER='" + song.getSinger() + "')");
@@ -51,6 +58,7 @@ public class Controller {
     }
 
 
+    //Αναζητά τις διάφορες  αναζητήσεις που ζητάει ο χρήστης και επιστρέφει ένα πίνακα με τα αποτελέσματα
     public ArrayList Search(String song, String flag) {
         try {
             ResultSet records = null;
@@ -72,6 +80,7 @@ public class Controller {
 
     }
 
+    //Ενας converter του table σε ArrayList
     private ArrayList MakeArray(ResultSet records) {
 
 
@@ -93,6 +102,7 @@ public class Controller {
     }
 
 
+    //H Rate πρακτικά εισάγει στην βάση το τραγούδι και τον βαθμό. Το πλήθος των στοιχείων στη βάση θα μας βοηθά και στο να υπολογίσουμε τον μέσο όρο στην Average
     public boolean Rate(String toRate, int stars) {
         try {
             //δεν ελέγχω αμα το τραγουδι που πληκτορλογει ο χρήστης υπάρχει μιας και απλα οταν το αναζητήσει για να δει
@@ -111,6 +121,7 @@ public class Controller {
 
     }
 
+    //Υπολογισμός μέσου όρου
     private void CalculateAverage(String toRate) throws SQLException {
         ResultSet records = null;
         System.out.println("Calculating Average");
@@ -125,6 +136,8 @@ public class Controller {
 
     }
 
+
+    //Αναζήτηση τραγουδιών με βαθμό μεγαλύτερο απο αυτόν που έχει επιλέξει ο χρήστης
     public ArrayList Rate_Search(int toSearch) {
         ResultSet records = null;
         try {

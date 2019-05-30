@@ -1,5 +1,9 @@
 package com.company;
 
+//Θάνος Καψάλης 321/2015088
+
+//Κεντρική Σελίδα
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -46,7 +50,7 @@ public class Client_UI extends JFrame {
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SEARCH_UI search_ui= null;
+                SEARCH_UI search_ui = null;
                 try {
                     search_ui = new SEARCH_UI();
                 } catch (RemoteException ex) {

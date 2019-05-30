@@ -1,5 +1,7 @@
 package com.company;
 
+//Θάνος Καψάλης 321/2015088
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,7 +47,6 @@ public class Insert_UI extends JFrame {
         add(duration);
 
 
-
         JButton submit = new JButton("Εισαγωγή");
         add(submit);
 
@@ -59,12 +60,13 @@ public class Insert_UI extends JFrame {
 
     }
 
+
+    //Μέσω του RMI τρέχουμε την Insert στον Server
     public void DBInsert() {
         try {
             look_op = (Song) Naming.lookup("//localhost/RMIServer");
-            check = look_op.Insert(new _Song_toAdd(title.getText(), type.getText(), singer.getText(), duration.getText(),0));
-            if (!check)
-            {
+            check = look_op.Insert(new _Song_toAdd(title.getText(), type.getText(), singer.getText(), duration.getText(), 0));
+            if (!check) {
                 JOptionPane.showMessageDialog(null, "Το τραγούδι υπάρχει ήδη");
                 return;
             }

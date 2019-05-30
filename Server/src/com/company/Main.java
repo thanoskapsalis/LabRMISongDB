@@ -5,6 +5,7 @@ import java.rmi.registry.Registry;
 
 public class Main {
 
+    //Θάνος Καψάλης 321/2015088
     public static void main(String[] args) {
 
         RMIHandler handler;

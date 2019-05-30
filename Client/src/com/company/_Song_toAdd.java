@@ -2,6 +2,8 @@ package com.company;
 
 import java.io.Serializable;
 
+//Θάνος Καψάλης 321/2015088
+
 public class _Song_toAdd implements Serializable {
 
     String title;

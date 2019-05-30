@@ -1,5 +1,9 @@
 package com.company;
 
+//Θάνος Καψάλης 321/2015088
+
+//Εμφάνιση αποτελεσμάτων αναζήτησης
+
 import javax.swing.*;
 import java.util.ArrayList;
 

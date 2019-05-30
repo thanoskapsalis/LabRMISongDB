@@ -1,5 +1,7 @@
 package com.company;
 
+//Θάννος Καψάλης 321/2015088
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +20,7 @@ public class Rate_UI extends JFrame {
 
     public Rate_UI() {
         super("Αξιολόγηση τραγουδιού");
-        setSize(600, 300);
+        setSize(600, 200);
         setResizable(false);
         setLayout(new GridLayout(2, 2));
         add(torate);
@@ -31,6 +33,7 @@ public class Rate_UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    //Βαθμολογούμε το τραγούδι που θέλουμε σε περίπτωση που ο χρηστης επιλέξει λάθος βαθμό πετάμε το κατάλληλο exception
                     look_op = (Song) Naming.lookup("//localhost/RMIServer");
                     if (Integer.parseInt(mark.getText()) > 10 || Integer.parseInt(mark.getText()) < 0)
                         throw new NotBoundException();
